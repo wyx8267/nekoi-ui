@@ -2,12 +2,21 @@
   <div>Button Demo</div>
   <h1>示例一</h1>
   <div>
-    <Button></Button>
+    <Button>你好</Button>
+    <Button theme="button">你好</Button>
+    <Button theme="link">你好</Button>
+    <Button theme="text">你好</Button>
   </div>
 </template>
 <script lang="ts">
 import Button from '../lib/Button.vue'
 export default {
-  components: {Button}
+  components: {Button},
+  setup(){
+    const onClick = ()=>{
+      console.log('h1');
+    }
+    return {onClick}
+  }
 }
 </script>
