@@ -39,6 +39,12 @@
     <Button theme="text">普通文字按钮</Button>
     <Button theme="text" level="danger">危险文字按钮</Button>
   </div>
+  <h1>示例四</h1>
+  <div>
+    <Button disabled>禁用按钮</Button>
+    <Button disabled theme="link">禁用链接按钮</Button>
+    <Button disabled theme="text">禁用文字按钮</Button>
+  </div>
 </template>
 <script lang="ts">
 import Button from '../lib/Button.vue'
