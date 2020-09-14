@@ -1,5 +1,5 @@
 <template>
-  <button :class="{checked: value}" @click="toggle">
+  <button class="nekoi-switch" :class="{'switch-checked': value}" @click="toggle">
     <span></span>
   </button>
   <!-- <div>{{value}}</div> -->
@@ -23,7 +23,7 @@ export default {
 <style lang="scss" scoped>
 $h: 22px;
 $h2: $h - 4px;
-button {
+.nekoi-switch {
   height: $h;
   width: $h * 2;
   border: none;
@@ -42,7 +42,7 @@ button {
     border-radius: $h2 / 2;
     transition: all 250ms;
   }
-  &.checked {
+  &.nekoi-checked {
     background: #1890ff;
     > span {
       left: calc(100% - #{$h2} - 2px);
@@ -56,7 +56,7 @@ button {
       width: $h2 + 4px;
     }
   }
-  &.checked:active {
+  &.nekoi-checked:active {
     > span {
       width: $h2 + 4px;
       margin-left: -4px;
