@@ -4,12 +4,11 @@
     <div class="nekoi-dialog-wrapper">
       <div class="nekoi-dialog">
         <header>
-          Title
+          <slot name="title"/>
           <span @click="close" class="nekoi-dialog-close"></span>
         </header>
         <main>
-          <p>First Line</p>
-          <p>Second Line</p>
+          <slot name="content"/>
         </main>
         <footer>
           <Button @click="ok" level="main">OK</Button>

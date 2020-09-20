@@ -2,7 +2,14 @@
   <div>Dialog Demo</div>
   <h1>示例一</h1>
   <Button @click="toggle">toggle</Button>
-  <Dialog v-model:visible="x" :closeOnClickOverlay="false" :ok="f1" :cancel="f2"></Dialog>
+  <Dialog v-model:visible="x" :closeOnClickOverlay="false" :ok="f1" :cancel="f2">
+    <template v-slot:content>
+      <p>Content</p>
+    </template>
+    <template v-slot:title>
+      <strong>加粗标题</strong>
+    </template>
+  </Dialog>
 </template>
 
 <script lang="ts">
@@ -22,8 +29,7 @@ export default {
     const f1 = () => {
       return false;
     };
-    const f2 = () => {
-    };
+    const f2 = () => {};
     return { x, toggle, f1, f2 };
   },
 };
