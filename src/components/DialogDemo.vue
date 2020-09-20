@@ -10,11 +10,14 @@
       <strong>加粗标题</strong>
     </template>
   </Dialog>
+  <h1>示例二</h1>
+  <Button @click="showDialog">showDialog</Button>
 </template>
 
 <script lang="ts">
 import Dialog from "../lib/Dialog.vue";
 import Button from "../lib/Button.vue";
+import { openDialog } from "../lib/openDialog";
 import { ref } from "vue";
 export default {
   components: {
@@ -29,8 +32,22 @@ export default {
     const f1 = () => {
       return false;
     };
-    const f2 = () => {};
-    return { x, toggle, f1, f2 };
+    const f2 = () => {
+      return false;
+    };
+    const showDialog = () => {
+      openDialog({
+        title: "标题",
+        content: "hello",
+        ok() {
+          console.log("ok");
+        },
+        cancel() {
+          console.log("cancel");
+        },
+      });
+    };
+    return { x, toggle, f1, f2, showDialog };
   },
 };
 </script>

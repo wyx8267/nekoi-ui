@@ -1,21 +1,23 @@
 <template>
   <template v-if="visible">
-    <div class="nekoi-dialog-overlay" @click="onClickOverlay"></div>
-    <div class="nekoi-dialog-wrapper">
-      <div class="nekoi-dialog">
-        <header>
-          <slot name="title"/>
-          <span @click="close" class="nekoi-dialog-close"></span>
-        </header>
-        <main>
-          <slot name="content"/>
-        </main>
-        <footer>
-          <Button @click="ok" level="main">OK</Button>
-          <Button @click="cancel">Cancel</Button>
-        </footer>
+    <Teleport to="body">
+      <div class="nekoi-dialog-overlay" @click="onClickOverlay"></div>
+      <div class="nekoi-dialog-wrapper">
+        <div class="nekoi-dialog">
+          <header>
+            <slot name="title" />
+            <span @click="close" class="nekoi-dialog-close"></span>
+          </header>
+          <main>
+            <slot name="content" />
+          </main>
+          <footer>
+            <Button @click="ok" level="main">OK</Button>
+            <Button @click="cancel">Cancel</Button>
+          </footer>
+        </div>
       </div>
-    </div>
+    </Teleport>
   </template>
 </template>
 
@@ -36,7 +38,7 @@ export default {
     },
     cancel: {
       type: Function,
-    }
+    },
   },
   components: { Button },
   setup(props, context) {
@@ -44,19 +46,20 @@ export default {
       context.emit("update:visible", false);
     };
     const onClickOverlay = () => {
-      if(props.closeOnClickOverlay){
+      if (props.closeOnClickOverlay) {
         close();
       }
-    }
+    };
     const ok = () => {
-      if(props.ok?.() !== false){
-        close()
+      if (props.ok?.() !== false) {
+        close();
       }
-    }
+    };
     const cancel = () => {
-      context.emit('cancel')
-    }
-    return {close, onClickOverlay, ok, cancel}
+      props.cancel?.();
+      close();
+    };
+    return { close, onClickOverlay, ok, cancel };
   },
 };
 </script>
