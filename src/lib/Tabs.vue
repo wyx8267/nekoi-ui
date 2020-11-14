@@ -6,7 +6,7 @@
         v-for="(t, index) in titles"
         :ref="
           (el) => {
-            if (el) navItems[index] = el;
+            if (el) selectedItem = el;
           }
         "
         :key="index"
@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { computed, onMounted, onUpdated, ref } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import Tab from "./Tab.vue";
 export default {
   props: {
@@ -38,38 +38,34 @@ export default {
     },
   },
   setup(props, context) {
-    const navItems = ref<HTMLDivElement[]>([]);
+    const selectedItem = ref<HTMLDivElement>(null);
     const indicator = ref<HTMLDivElement>(null);
     const container = ref<HTMLDivElement>(null);
-    const renderIndicator = () => {
-      const divs = navItems.value;
-      const result = divs.filter((div) => div.classList.contains("selected"))[0];
-      const { width, left } = result.getBoundingClientRect();
+
+    watchEffect(() => {
+      const { width, left } = selectedItem.value.getBoundingClientRect();
       indicator.value.style.width = width + "px";
       const { left: containerLeft } = container.value.getBoundingClientRect();
       const indicatorLeft = left - containerLeft;
       indicator.value.style.left = indicatorLeft + "px";
-    };
-    onMounted(renderIndicator);
-    onUpdated(renderIndicator);
+    });
+
     const defaults = context.slots.default();
     defaults.forEach((tag) => {
       if (tag.type !== Tab) {
         throw new Error("Tabs 子标签必须是 Tab");
       }
     });
-    const current = computed(() => {
-      return defaults.filter((tag) => {
-        return tag.props.title === props.selected;
-      })[0];
-    });
+
     const titles = defaults.map((tag) => {
       return tag.props.title;
     });
+
     const select = (title: string) => {
       context.emit("update:selected", title);
     };
-    return { defaults, titles, current, select, navItems, indicator, container };
+
+    return { defaults, titles, select, indicator, container, selectedItem };
   },
 };
 </script>
