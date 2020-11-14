@@ -3,9 +3,9 @@
     Tabs Demo
   </div>
   <h1>示例1</h1>
-  <Tabs v-model:selected="selected">
+  <Tabs v-model:selected="selectedTab">
     <Tab title="导航1">内容1</Tab>
-    <Tab title="导航222222">内容2</Tab>
+    <Tab title="导航2">内容2</Tab>
   </Tabs>
 </template>
 
@@ -18,8 +18,8 @@ export default {
     Tabs, Tab
   },
   setup(){
-    const selected = ref('导航222222');
-    return {selected}
+    const selectedTab = ref('导航1');
+    return {selectedTab}
   }
 }
 </script>

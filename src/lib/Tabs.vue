@@ -6,7 +6,7 @@
         v-for="(t, index) in titles"
         :ref="
           (el) => {
-            if (el) selectedItem = el;
+            if (t===selected) selectedItem = el;
           }
         "
         :key="index"
@@ -20,16 +20,15 @@
     <div class="nekoi-tabs-content">
       <component
         class="nekoi-tabs-content-item"
-        :class="{ selected: c.props.title === selected }"
-        v-for="c in defaults"
-        :is="c"
+        :is="current"
+        :key="current.props.title"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, ref, watchEffect } from "vue";
+import { computed, onMounted, ref, watchEffect } from "vue";
 import Tab from "./Tab.vue";
 export default {
   props: {
@@ -42,12 +41,14 @@ export default {
     const indicator = ref<HTMLDivElement>(null);
     const container = ref<HTMLDivElement>(null);
 
-    watchEffect(() => {
-      const { width, left } = selectedItem.value.getBoundingClientRect();
-      indicator.value.style.width = width + "px";
-      const { left: containerLeft } = container.value.getBoundingClientRect();
-      const indicatorLeft = left - containerLeft;
-      indicator.value.style.left = indicatorLeft + "px";
+    onMounted(() => {
+      watchEffect(() => {
+        const { width, left } = selectedItem.value.getBoundingClientRect();
+        indicator.value.style.width = width + "px";
+        const { left: containerLeft } = container.value.getBoundingClientRect();
+        const indicatorLeft = left - containerLeft;
+        indicator.value.style.left = indicatorLeft + "px";
+      });
     });
 
     const defaults = context.slots.default();
@@ -57,6 +58,10 @@ export default {
       }
     });
 
+    const current = computed(() => {
+      return defaults.find(tag => tag.props.title === props.selected)
+    })
+
     const titles = defaults.map((tag) => {
       return tag.props.title;
     });
@@ -65,7 +70,7 @@ export default {
       context.emit("update:selected", title);
     };
 
-    return { defaults, titles, select, indicator, container, selectedItem };
+    return { defaults, titles, select, indicator, container, selectedItem, current };
   },
 };
 </script>
@@ -109,14 +114,6 @@ $border-color: #d9d9d9;
 
   &-content {
     padding: 8px 0;
-
-    &-item {
-      display: none;
-
-      &.selected {
-        display: block;
-      }
-    }
   }
 }
 </style>
