@@ -10,9 +10,9 @@ const mdToJs = str => {
 
 export function md() {
   return {
-    configureServer: [
+    configureServer: [ // 用于开发
       async ({ app }) => {
-        app.use(async (ctx, next) => {
+        app.use(async (ctx, next) => { // koa
           if (ctx.path.endsWith('.md')) {
             ctx.type = 'js';
             const filePath = path.join(process.cwd(), ctx.path);
@@ -21,10 +21,10 @@ export function md() {
             await next();
           }
         });
-      }
+      },
     ],
-    transforms: [{ // 用于 rollup 插件
-      test: context.path.endsWith('.md'),
+    transforms: [{  // 用于 rollup // 插件
+      test: context => context.path.endsWith('.md'),
       transform: ({ code }) => mdToJs(code)
     }]
   };
