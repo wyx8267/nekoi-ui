@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <Topnav :toggleMenuButtonVisible="true" class="nav"/>
+    <Topnav :toggleMenuButtonVisible="true" class="nav" />
     <div class="content">
       <aside v-if="asideVisible">
         <h2>文档</h2>
@@ -49,11 +49,13 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+$aside-index: 10;
+
 .layout {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  > .nav{
+  > .nav {
     flex-shrink: 0;
   }
   > .content {
@@ -81,10 +83,11 @@ aside {
   width: 150px;
   padding: 16px 0;
   position: fixed;
-    padding-top: 70px;
-    top: 0;
-    left: 0;
-    height: 100%;
+  padding-top: 70px;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: $aside-index;
   > h2 {
     margin-bottom: 4px;
     padding: 0 16px;
@@ -95,7 +98,7 @@ aside {
         display: block;
         padding: 4px 16px;
       }
-      .router-link-active{
+      .router-link-active {
         background: #fff;
         text-decoration: none;
       }
