@@ -1,5 +1,5 @@
 <template>
-  <button class="nekoi-switch" :class="{'switch-checked': value}" @click="toggle">
+  <button class="nekoi-switch" :class="{'nekoi-checked': value}" @click="toggle">
     <span></span>
   </button>
   <!-- <div>{{value}}</div> -->
