@@ -2,7 +2,6 @@
   <button class="nekoi-switch" :class="{'nekoi-checked': value}" @click="toggle">
     <span></span>
   </button>
-  <!-- <div>{{value}}</div> -->
 </template>
 
 <script lang="ts">

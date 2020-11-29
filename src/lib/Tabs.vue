@@ -48,6 +48,8 @@ export default {
         const { left: containerLeft } = container.value.getBoundingClientRect();
         const indicatorLeft = left - containerLeft;
         indicator.value.style.left = indicatorLeft + "px";
+      },{
+        flush: 'post'
       });
     });
 
